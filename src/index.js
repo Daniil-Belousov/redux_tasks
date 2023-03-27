@@ -3,21 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { legacy_createStore as createStore} from 'redux'
 import { Provider } from 'react-redux';
-
-const defaultState = {
-  users: []
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    default:
-      return defaultState;
-  }
-}
-
-const store = createStore(reducer);
+import { store } from './store/index'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

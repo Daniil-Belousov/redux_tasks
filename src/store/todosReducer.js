@@ -22,7 +22,7 @@ export const todosReducer = (state = defaultState, action) => {
     case EDIT_TODO:
       return {...state, todos: state.todos.map(todo => {
         if(todo.id === action.payload.id) {
-          todo.task = action.payload.task;
+          todo.title = action.payload.title;
         }
         return todo;
       }) }

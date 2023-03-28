@@ -28,7 +28,7 @@ function App() {
 
   const editTask = (todo) => {
     setEditTask(todo.id);
-    setEditText(todo.task)
+    setEditText(todo.title)
   }
 
   const saveTask = (todo) => {
@@ -77,7 +77,7 @@ function App() {
                         onChange={(e) => setEditText(e.target.value)}
                       />
                       <button
-                        onClick={() => saveTask({...todo, task: editText})}
+                        onClick={() => saveTask({...todo, title: editText})}
                         style={{marginLeft: '10px', cursor: 'pointer'}}
                       >save</button> 
                     </> 

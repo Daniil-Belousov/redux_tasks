@@ -10,6 +10,7 @@ function App() {
   const [title, setTitle] = useState('');
   const [isEditTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState('');
+  const [lookInfo, setLookInfo] = useState(null);
 
   const addTodo = () => {
     dispatch(addTodoAction({title, id: `${Math.random()}`}));
@@ -47,6 +48,14 @@ function App() {
           чтобы легко отследить и исправить ошибки в приложении.
         </p>
         <h1>Todos</h1>
+        {lookInfo &&
+          <div style={{display: 'flex', flexDirection: 'column', color: 'black', position: 'absolute', top: '50%', left: '50%', width: '400px', height: '200px', background: 'white', transform: 'translate(-50%, -50%)'}}>
+            <span>Статус: {lookInfo.completed ? 'Выполнен' : 'Не выполнен'}</span>
+            <span>Id: {lookInfo.id}</span>
+            <span>Текст: {lookInfo.title.substring(0,20)}...</span>
+            <span>Id Юзера: {lookInfo.userId}</span>
+          </div>
+        } 
         <div>
           <input 
             placeholder='таск' 
@@ -84,6 +93,8 @@ function App() {
                     : (
                       <>
                         <span 
+                          onMouseOver={() => setLookInfo(todo)}
+                          onMouseLeave={() => setLookInfo(null)}
                           style={{textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer'}}
                         >{todo.title}</span>
                         <button 

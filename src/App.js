@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addTodoAction, deleteTodoAction, editTodoAction} from './store/todosReducer'
 
 function App() {
   const dispatch = useDispatch();
@@ -11,12 +12,13 @@ function App() {
   const [editText, setEditText] = useState('');
 
   const addTodo = () => {
-    dispatch({type: 'ADD_TODO', payload: {task, id: `${Math.random()}`}});
+    dispatch(addTodoAction({task, id: `${Math.random()}`}));
     setTask('');
   }
 
   const deleteTodo = (id) => {
     dispatch({type: 'DELETE_TODO', payload: {id}})
+    dispatch(deleteTodoAction(id))
   }
 
   const editTask = (todo) => {
@@ -25,7 +27,7 @@ function App() {
   }
 
   const saveTask = (todo) => {
-    dispatch({type: 'EDIT_TODO', payload: todo});
+    dispatch(editTodoAction(todo));
     setEditTask(null);
     setEditText('');
   }

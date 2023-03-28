@@ -5,9 +5,14 @@ const defaultState = {
 const ADD_TODO = 'ADD_TODO'
 const DELETE_TODO = 'DELETE_TODO'
 const EDIT_TODO = 'EDIT_TODO'
+const GET_REMOTE_TODOS = 'GET_REMOTE_TODOS'
 
 export const todosReducer = (state = defaultState, action) => {
   switch(action.type) {
+    case GET_REMOTE_TODOS:
+      const remoteTodos = Object.values(action.payload);
+      return {...state, todos: [...state.todos, ...remoteTodos]}
+
     case ADD_TODO:
       return {...state, todos : [...state.todos, action.payload]}
 
@@ -30,3 +35,4 @@ export const todosReducer = (state = defaultState, action) => {
 export const addTodoAction = (payload) => ({type: ADD_TODO, payload});
 export const deleteTodoAction = (payload) => ({type: DELETE_TODO, payload});
 export const editTodoAction = (payload) => ({type: EDIT_TODO, payload});
+export const getRemoteTodosAction = (payload) => ({type: GET_REMOTE_TODOS, payload});

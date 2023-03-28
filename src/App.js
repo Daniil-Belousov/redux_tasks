@@ -2,18 +2,23 @@ import './App.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodoAction, deleteTodoAction, editTodoAction} from './store/todosReducer'
+import { fetchTodos } from './asyncActions/todosFetch';
 
 function App() {
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todos.todos)
 
-  const [task, setTask] = useState('');
+  const [title, setTitle] = useState('');
   const [isEditTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState('');
 
   const addTodo = () => {
-    dispatch(addTodoAction({task, id: `${Math.random()}`}));
-    setTask('');
+    dispatch(addTodoAction({title, id: `${Math.random()}`}));
+    setTitle('');
+  }
+
+  const getRemoteTodos = () => {
+    dispatch(fetchTodos())
   }
 
   const deleteTodo = (id) => {
@@ -46,18 +51,22 @@ function App() {
         <div>
           <input 
             placeholder='таск' 
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <button
             style={{marginLeft: '10px', cursor: 'pointer'}} 
             onClick={() => addTodo()}
           >Добавить</button>
+          <button
+            style={{marginLeft: '5px', cursor: 'pointer'}} 
+            onClick={() => getRemoteTodos()}
+          >Получить таски из базы</button>
         </div>
         <div>
           <h2>Список задача:</h2>
-          <ul>
-            {todos && todos.map(todo => {
+          <ol style={{display: 'flex', flexDirection: 'column-reverse'}}>
+            {todos.length > 0 && todos.map(todo => {
               return(
                 <li key={`${todo.id}`}>
                   {isEditTask === todo.id ?
@@ -75,7 +84,7 @@ function App() {
                     )
                     : (
                       <>
-                        <span>{todo.task}</span>
+                        <span>{todo.title}</span>
                         <button 
                           onClick={() => editTask(todo)}
                           style={{marginLeft: '10px', cursor: 'pointer'}}
@@ -90,7 +99,7 @@ function App() {
                 </li>
               )
             })}
-          </ul>
+          </ol>
         </div>
       </header>
     </div>

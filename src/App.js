@@ -83,7 +83,9 @@ function App() {
                     )
                     : (
                       <>
-                        <span>{todo.title}</span>
+                        <span 
+                          style={{textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer'}}
+                        >{todo.title}</span>
                         <button 
                           onClick={() => editTask(todo)}
                           style={{marginLeft: '10px', cursor: 'pointer'}}

@@ -1,8 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodoAction, deleteTodoAction, editTodoAction} from './store/todosReducer'
-import { fetchTodos } from './asyncActions/todosFetch';
+import { addTodoAction, deleteTodoAction, editTodoAction, getRemoteTodosAction} from './store/todosReducer'
 
 function App() {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ function App() {
   }
 
   const getRemoteTodos = () => {
-    dispatch(fetchTodos())
+    dispatch(getRemoteTodosAction())
   }
 
   const deleteTodo = (id) => {
@@ -28,7 +27,7 @@ function App() {
 
   const editTask = (todo) => {
     setEditTask(todo.id);
-    setEditText(todo.task)
+    setEditText(todo.title)
   }
 
   const saveTask = (todo) => {
@@ -77,7 +76,7 @@ function App() {
                         onChange={(e) => setEditText(e.target.value)}
                       />
                       <button
-                        onClick={() => saveTask({...todo, task: editText})}
+                        onClick={() => saveTask({...todo, title: editText})}
                         style={{marginLeft: '10px', cursor: 'pointer'}}
                       >save</button> 
                     </> 

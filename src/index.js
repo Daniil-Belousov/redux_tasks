@@ -7,17 +7,24 @@ import { legacy_createStore as createStore} from 'redux'
 import { Provider } from 'react-redux';
 
 const defaultState = {
-  records: [],
+  expenditures: [],
+  incomes: [],
   cash: 0
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_RECORD':
-      return {...state, records: [...state.records, action.payload], cash: state.cash + action.payload.cost}
+    case 'ADD_EXPENDITURE':
+      return {...state, expenditures: [...state.expenditures, action.payload], cash: state.cash - action.payload.cost}
 
-    case 'DELETE_RECORD':
-      return {...state, records: state.records.filter(record => record.id !== action.payload.id), cash: state.cash - action.payload.cost}
+    case 'DELETE_EXPENDITURE':
+      return {...state, expenditures: state.expenditures.filter(record => record.id !== action.payload.id), cash: state.cash + action.payload.cost}
+
+      case 'ADD_INCOME':
+        return {...state, incomes: [...state.incomes, action.payload], cash: state.cash + action.payload.cost}
+      
+        case 'DELETE_INCOME':
+          return {...state, incomes: state.incomes.filter(record => record.id !== action.payload.id), cash: state.cash - action.payload.cost}
 
     default:
       return defaultState;
